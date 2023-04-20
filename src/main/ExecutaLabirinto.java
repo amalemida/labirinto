@@ -2,7 +2,7 @@ package main;
 
 import labirinto.*;
 
-public class VamosEncontrarASaida {
+public class ExecutaLabirinto {
 	public static void main(String[] args) {
 		String opcao = "";
 		while (!opcao.equals("3")) {
@@ -38,9 +38,9 @@ public class VamosEncontrarASaida {
 					try {
 						// Achar a solução para o labirinto, caso exista.
 						labirinto = new Labirinto(arqLabirinto);
-						labirinto.encontrarSolucao();
+						labirinto.encontrarSaida();
 					} catch (Exception e) {
-						System.err.println("Sem Solução: " + e.getMessage());
+						System.err.println(e.getMessage());
 					}
 				} catch (Exception e) {
 					System.err.println("Erro: " + e.getMessage());

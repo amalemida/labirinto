@@ -8,14 +8,31 @@ import java.nio.file.FileSystems;
 public class LeArquivo {
 	private BufferedReader in;
 	private final String caminhoDeEntrada;
+	private String opcao;
 
-	String caminho;
+	public String getOpcao() {
+		return opcao;
+	}
+
+	public void setOpcao(String opcao) {
+		this.opcao = opcao;
+	}
 
 	public LeArquivo(String nomeDoArquivo) throws Exception {
 		if (nomeDoArquivo.isEmpty() || nomeDoArquivo.isBlank())
-			throw new Exception("Nome do arquivo nulo");
+			throw new Exception("Nome do arquivo inválido");
 
 		try {
+
+			switch (opcao) {
+			case "1":
+				nomeDoArquivo = "src/Labirintos_corretos/";
+				break;
+			case "2":
+				nomeDoArquivo = "src/Labirintos_errados/";
+				break;
+			default: {}
+			}
 			this.caminhoDeEntrada = FileSystems.getDefault().getPath(nomeDoArquivo).toAbsolutePath().toString();
 			this.in = new BufferedReader(new FileReader(this.caminhoDeEntrada));
 		} catch (IOException erro) {

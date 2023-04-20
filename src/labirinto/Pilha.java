@@ -55,7 +55,7 @@ public class Pilha <X> implements Cloneable
         return ret;
     }
 
-    public void guardeUmItem (X x) throws Exception // LIFO
+    public void guardePosicao (X x) throws Exception // LIFO
     {
         if (x==null)
             throw new Exception ("Falta o que guardar");

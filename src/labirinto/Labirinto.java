@@ -6,8 +6,8 @@ public class Labirinto {
 	private int qtdColunas;
 	private int numeroEntradas;
 	private int numeroSaidas;
-	private Coordenada atual;
 	private Coordenada posicaoEntrada;
+	private Coordenada atual;
 	private boolean encontrouSaida = false;
 
 	public Labirinto(LeArquivo arquivo) throws Exception {
@@ -90,7 +90,7 @@ public class Labirinto {
 		}
 	}
 
-	public void encontrarSolucao() throws Exception {
+	public void encontrarSaida() throws Exception {
 		Pilha<Coordenada> caminho = new Pilha<>(qtdColunas * qtdLinhas);
 		Pilha<Fila<Coordenada>> possibilidades = new Pilha<>(qtdColunas * qtdLinhas);
 
@@ -102,20 +102,20 @@ public class Labirinto {
 
 		labirinto[atual.getLinha()][atual.getColuna()] = '*';
 
-		caminho.guardeUmItem(atual);
-		possibilidades.guardeUmItem(filaDeAdjacentes);
+		caminho.guardePosicao(atual);
+		possibilidades.guardePosicao(filaDeAdjacentes);
 
 		while (!encontrouSaida) {
-			andarPosicoesAdjacentes(new Fila<Coordenada>(3), possibilidades, caminho);
+			percorrerPosicoesAdjacentes(new Fila<Coordenada>(3), possibilidades, caminho);
 		}
 
-		System.out.println("Solução encontrada! Mostrando o caminho...");
+		System.out.println("Saída encontrada!");
 		imprimeLabirinto();
 
 		retrocederCaminho(caminho);
 	}
 
-	private void andarPosicoesAdjacentes(Fila<Coordenada> filaDeAdjacentes, Pilha<Fila<Coordenada>> possibilidades,
+	private void percorrerPosicoesAdjacentes(Fila<Coordenada> filaDeAdjacentes, Pilha<Fila<Coordenada>> possibilidades,
 			Pilha<Coordenada> caminho) throws Exception {
 		posicaoAdjacentes(filaDeAdjacentes);
 
@@ -132,7 +132,7 @@ public class Labirinto {
 				filaDeAdjacentes = possibilidades.recupereUmItem();
 				possibilidades.removaUmItem();
 				if (possibilidades.isVazia())
-					throw new Exception("Não existe caminho que leva da entrada  até a saída ");
+					throw new Exception("Não existe caminho que leva da entrada até a saída ");
 			} while (filaDeAdjacentes.isVazia());
 		}
 
@@ -144,14 +144,14 @@ public class Labirinto {
 		}
 		filaDeAdjacentes.removaUmItem();
 		inserirCaracterNaCoordenada('*', atual);
-		caminho.guardeUmItem(atual);
-		possibilidades.guardeUmItem(filaDeAdjacentes);
+		caminho.guardePosicao(atual);
+		possibilidades.guardePosicao(filaDeAdjacentes);
 	}
 
 	private void retrocederCaminho(Pilha<Coordenada> caminho) throws Exception {
 		Pilha<Coordenada> inverso = new Pilha<>();
 		while (!caminho.isVazia()) {
-			inverso.guardeUmItem(caminho.recupereUmItem());
+			inverso.guardePosicao(caminho.recupereUmItem());
 			caminho.removaUmItem();
 		}
 
@@ -245,4 +245,3 @@ public class Labirinto {
 		return ret;
 	}
 }
-
