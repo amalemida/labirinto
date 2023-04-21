@@ -13,7 +13,7 @@ public class LeArquivo {
 	private String caminhoDeEntrada;
 	public static String path;
 	List<String> lista = new ArrayList<String>(Arrays.asList(
-			new String[] { "Teste1.txt", "Teste2.txt","Teste3.txt","Teste4.txt","Teste5.txt","Teste6.txt" }));
+			new String[] { "Teste1.txt", "Teste2.txt", "Teste3.txt", "Teste4.txt", "Teste5.txt", "Teste6.txt" }));
 
 	public LeArquivo(String nomeDoArquivo) throws Exception {
 		if (nomeDoArquivo.isEmpty() || nomeDoArquivo.isBlank())
@@ -25,15 +25,17 @@ public class LeArquivo {
 				if (nomeDoArquivo.contains(lista.get(i))) {
 					path = "src/Labirintos_corretos/";
 					break;
-				} else
+				} else {
 					path = "src/Labirintos_errados/";
-			}
 
+				}
+			}
 			this.caminhoDeEntrada = FileSystems.getDefault().getPath(path + nomeDoArquivo).toAbsolutePath().toString();
 			this.in = new BufferedReader(new FileReader(this.caminhoDeEntrada));
 
-		} catch (IOException erro) {
-			System.err.println(erro.getMessage());
+		} catch (Exception erro) {
+			erro.getMessage();
+			System.err.println("Arquivo não encontrado");
 		}
 	}
 

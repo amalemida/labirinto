@@ -11,19 +11,17 @@ public class ExecutaLabirinto {
 
 		Labirinto labirinto;
 		try {
-			if (nomeDoArquivo.equals(""))
-				System.err.println("Digite um nome de arquivo");
-
 			LeArquivo arquivo = new LeArquivo(nomeDoArquivo);
-			try {
+			{
+
 				// Achar a solução para o labirinto, caso exista.
 				labirinto = new Labirinto(arquivo);
 				labirinto.encontrarSaida();
-			} catch (Exception e) {
-				System.err.println(e.getMessage());
+
 			}
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
+		} catch (Exception erro) {
+			erro.getMessage();
+			System.err.println("Arquivo não encontrado");
 		}
 	}
 
