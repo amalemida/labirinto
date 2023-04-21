@@ -4,19 +4,16 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class LeArquivo {
 	private BufferedReader in;
-	private final String caminhoDeEntrada;
-	private String opcao;
-
-	public String getOpcao() {
-		return opcao;
-	}
-
-	public void setOpcao(String opcao) {
-		this.opcao = opcao;
-	}
+	private String caminhoDeEntrada;
+	public static String path;
+	List<String> lista = new ArrayList<String>(Arrays.asList(
+			new String[] { "Teste1.txt", "Teste2.txt","Teste3.txt","Teste4.txt","Teste5.txt","Teste6.txt" }));
 
 	public LeArquivo(String nomeDoArquivo) throws Exception {
 		if (nomeDoArquivo.isEmpty() || nomeDoArquivo.isBlank())
@@ -24,19 +21,19 @@ public class LeArquivo {
 
 		try {
 
-			switch (opcao) {
-			case "1":
-				nomeDoArquivo = "src/Labirintos_corretos/";
-				break;
-			case "2":
-				nomeDoArquivo = "src/Labirintos_errados/";
-				break;
-			default: {}
+			for (int i = 0; i < lista.size(); i++) {
+				if (nomeDoArquivo.contains(lista.get(i))) {
+					path = "src/Labirintos_corretos/";
+					break;
+				} else
+					path = "src/Labirintos_errados/";
 			}
-			this.caminhoDeEntrada = FileSystems.getDefault().getPath(nomeDoArquivo).toAbsolutePath().toString();
+
+			this.caminhoDeEntrada = FileSystems.getDefault().getPath(path + nomeDoArquivo).toAbsolutePath().toString();
 			this.in = new BufferedReader(new FileReader(this.caminhoDeEntrada));
+
 		} catch (IOException erro) {
-			throw new Exception("Arquivo nao encontrado");
+			System.err.println(erro.getMessage());
 		}
 	}
 
@@ -57,8 +54,7 @@ public class LeArquivo {
 		try {
 			ret = Integer.parseInt(in.readLine());
 		} catch (IOException ignored) {
-		} 
-		catch (NumberFormatException ignored) {
+		} catch (NumberFormatException ignored) {
 			throw new Exception("Int invalido!");
 		}
 
