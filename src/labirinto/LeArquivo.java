@@ -11,32 +11,36 @@ import java.util.List;
 public class LeArquivo {
 	private BufferedReader in;
 	private String caminhoDeEntrada;
-	public static String path;
-	List<String> lista = new ArrayList<String>(Arrays.asList(
-			new String[] { "Teste1.txt", "Teste2.txt", "Teste3.txt", "Teste4.txt", "Teste5.txt", "Teste6.txt" }));
+	private String path;
+	private int[] opcoes = { 1, 2, 3, 4, 5, 6,};
+	private String nomeDoArquivo;
 
-	public LeArquivo(String nomeDoArquivo) throws Exception {
+	public LeArquivo(String nomeDoArquivo, int opcao) throws Exception {
+		this.nomeDoArquivo = nomeDoArquivo;
 		if (nomeDoArquivo.isEmpty() || nomeDoArquivo.isBlank())
-			throw new Exception("Nome do arquivo inválido");
+			throw new Exception("Nome do arquivo inválido!");
 
 		try {
-
-			for (int i = 0; i < lista.size(); i++) {
-				if (nomeDoArquivo.contains(lista.get(i))) {
-					path = "src/Labirintos_corretos/";
+			for (int i = 0; i < opcoes.length; i++) {
+				if (opcao == opcoes[i]) {
+					path = "src/labirintos_corretos/" + nomeDoArquivo;
 					break;
-				} else {
-					path = "src/Labirintos_errados/";
 
+				} else {
+					path = "src/labirintos_errados/" + nomeDoArquivo;
 				}
 			}
-			this.caminhoDeEntrada = FileSystems.getDefault().getPath(path + nomeDoArquivo).toAbsolutePath().toString();
+			this.caminhoDeEntrada = FileSystems.getDefault().getPath(path).toAbsolutePath().toString();
 			this.in = new BufferedReader(new FileReader(this.caminhoDeEntrada));
 
 		} catch (Exception erro) {
 			erro.getMessage();
-			System.err.println("Arquivo não encontrado");
+		//	System.err.println("Arquivo não encontrado");
 		}
+	}
+
+	public String getNomeDoArquivo() {
+		return nomeDoArquivo;
 	}
 
 	public String pegaProximaLinha() {
@@ -49,7 +53,7 @@ public class LeArquivo {
 
 		return ret;
 	}
-
+	//pega do objeto in
 	public int pegaUmInt() throws Exception {
 		int ret = 0;
 

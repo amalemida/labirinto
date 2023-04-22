@@ -11,6 +11,7 @@ public class Labirinto {
 	private boolean encontrouSaida = false;
 
 	public Labirinto(LeArquivo arquivo) throws Exception {
+		//this.arquivo = arquivo;
 		// Pega o numero de linhas
 		this.qtdLinhas = arquivo.pegaUmInt();
 		// Pega o numero de colunas
@@ -35,7 +36,7 @@ public class Labirinto {
 		}
 
 		arquivo.fecharArquivo();
-
+		
 		if (numLinha != this.qtdLinhas)
 			throw new Exception("Quantidade de linhas diferente da especificada");
 
@@ -43,7 +44,7 @@ public class Labirinto {
 		verificaEntradasESaidas();
 		verificarParedes();
 
-		System.out.println("Labirinto Original! Encontrado o caminho...");
+		System.out.println("Labirinto " +arquivo.getNomeDoArquivo()+"\n");
 		imprimeLabirinto();
 	}
 
@@ -109,9 +110,10 @@ public class Labirinto {
 			percorrerPosicoesAdjacentes(new Fila<Coordenada>(3), possibilidades, caminho);
 		}
 
-		System.out.println("Saída encontrada!");
+		System.out.println("Oba saída encontrada!");
 		imprimeLabirinto();
-
+		
+		System.out.println("Posições do caminho até a saída\n");
 		retrocederCaminho(caminho);
 	}
 
@@ -199,33 +201,33 @@ public class Labirinto {
 
 	private void verificaEntradasESaidas() throws Exception {
 		if (numeroEntradas == 0)
-			throw new Exception("O labirinto não possui entrada");
+			throw new Exception("o labirinto não possui entrada");
 		if (numeroEntradas > 1)
-			throw new Exception("O labirinto possui mais de uma entrada");
+			throw new Exception("o labirinto possui mais de uma entrada");
 
 		if (numeroSaidas == 0)
-			throw new Exception("O labirinto não possui saída");
+			throw new Exception("o labirinto não possui saída");
 		if (numeroSaidas > 1)
-			throw new Exception("O labirinto possui mais de uma saida");
+			throw new Exception("o labirinto possui mais de uma saida");
 	}
 
 	private void verificarParedes() throws Exception {
 		for (int j = 0; j < qtdColunas; j++) {
 			// Parede de Cima
 			if (labirinto[0][j] == ' ')
-				throw new Exception("O labirinto não possui parede na parte de cima");
+				throw new Exception("o labirinto não possui parede na parte de cima");
 			// Parede de Baixo
 			if (labirinto[qtdLinhas - 1][j] == ' ')
-				throw new Exception("O labirinto não possui parede na parte de baixo");
+				throw new Exception("o labirinto não possui parede na parte de baixo");
 		}
 
 		for (int i = 0; i < qtdLinhas; i++) {
 			// Parede Esquerda
 			if (labirinto[i][0] == ' ')
-				throw new Exception("O labirinto não possui parede à esquerda");
+				throw new Exception("o labirinto não possui parede à esquerda");
 			// Parede Direita
 			if (labirinto[i][qtdColunas - 1] == ' ')
-				throw new Exception("O labirinto não possui parede à direita");
+				throw new Exception("o labirinto não possui parede à direita");
 		}
 	}
 
