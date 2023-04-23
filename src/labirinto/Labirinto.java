@@ -10,60 +10,60 @@ public class Labirinto {
 	private Coordenada atual;
 	private boolean encontrouSaida = false;
 
-	public Labirinto(LeArquivo arquivo) throws Exception {
+	public Labirinto(Arquivo arquivo) throws Exception {
 		//this.arquivo = arquivo;
 		// Pega o numero de linhas
-		this.qtdLinhas = arquivo.pegaUmInt();
+		this.qtdLinhas = arquivo.pegarUmItem();
 		// Pega o numero de colunas
-		this.qtdColunas = arquivo.pegaUmInt();
+		this.qtdColunas = arquivo.pegarUmItem();
 
 		String terceiraLinha = arquivo.pegaProximaLinha();
 
 		if (this.qtdLinhas == 0 || this.qtdColunas == 0)
-			throw new Exception("Labirinto inválido");
+			throw new Exception("Labirinto inválido!");
 
 		// Cria o labirinto
 		this.labirinto = new char[qtdLinhas][qtdColunas];
 
-		insereLinha(terceiraLinha, 0);
+		inserirLinha(terceiraLinha, 0);
 
 		String linha;
 		int numLinha = 1;
 
 		while ((linha = arquivo.pegaProximaLinha()) != null) {
-			insereLinha(linha, numLinha);
+			inserirLinha(linha, numLinha);
 			numLinha++;
 		}
 
 		arquivo.fecharArquivo();
 		
 		if (numLinha != this.qtdLinhas)
-			throw new Exception("Quantidade de linhas diferente da especificada");
+			throw new Exception("a quantidade de linhas é diferente da especificada!");
 
 		// Verifica se o labirinto possui uma unica entrada e saida
 		verificaEntradasESaidas();
 		verificarParedes();
 
-		System.out.println("Labirinto " +arquivo.getNomeDoArquivo()+"\n");
+		System.out.println("Labirinto do arquivo " + arquivo.getNomeDoArquivo() +"\n");
 		imprimeLabirinto();
 	}
 
-	private void insereLinha(String linha, int numeroLinha) throws Exception {
-		verificaLinha(linha, numeroLinha);
+	private void inserirLinha(String linha, int numeroLinha) throws Exception {
+		verificarLinha(linha, numeroLinha);
 
 		this.labirinto[numeroLinha] = linha.toCharArray();
 	}
 
-	private void verificaLinha(String linha, int numeroDaLinha) throws Exception {
+	private void verificarLinha(String linha, int numeroDaLinha) throws Exception {
 		int tamanhoLinha = linha.length();
 
 		// Verifica o tamanho das linhas
 		if (tamanhoLinha != qtdColunas)
-			throw new Exception("O Labirinto possui linhas com tamanhos diferentes");
+			throw new Exception("o labirinto possui linhas com tamanhos diferentes!");
 
 		// Verifica o numero de linhas
 		if (numeroDaLinha >= qtdLinhas)
-			throw new Exception("O Labirinto possui mais linhas do que o especificado");
+			throw new Exception("o labirinto possui mais linhas do que o especificado!");
 
 		String caracteresAceitos = "# ES";
 
@@ -72,7 +72,7 @@ public class Labirinto {
 
 			// Verifica os caracteres permitidos
 			if (caracteresAceitos.indexOf(caractere) == -1)
-				throw new Exception("O caractere " + caractere + " é inválido");
+				throw new Exception("o caractere " + caractere + " é inválido");
 
 			switch (caractere) {
 			case 'E':
@@ -103,14 +103,14 @@ public class Labirinto {
 
 		labirinto[atual.getLinha()][atual.getColuna()] = '*';
 
-		caminho.guardePosicao(atual);
-		possibilidades.guardePosicao(filaDeAdjacentes);
+		caminho.guardaPosicao(atual);
+		possibilidades.guardaPosicao(filaDeAdjacentes);
 
 		while (!encontrouSaida) {
 			percorrerPosicoesAdjacentes(new Fila<Coordenada>(3), possibilidades, caminho);
 		}
 
-		System.out.println("Oba saída encontrada!");
+		System.out.println("Oba, saída encontrada!\n");
 		imprimeLabirinto();
 		
 		System.out.println("Posições do caminho até a saída\n");
@@ -127,14 +127,14 @@ public class Labirinto {
 				atual = caminho.recupereUmItem();
 				caminho.removaUmItem();
 				if (caminho.isVazia())
-					throw new Exception("Saida não encontrada");
+					throw new Exception("Saida não encontrada!");
 
-				inserirCaracterNaCoordenada(' ', atual);
+				inserirCaractere(' ', atual);
 
 				filaDeAdjacentes = possibilidades.recupereUmItem();
 				possibilidades.removaUmItem();
 				if (possibilidades.isVazia())
-					throw new Exception("Não existe caminho que leva da entrada até a saída ");
+					throw new Exception("não existe caminho que leva da entrada até a saída!");
 			} while (filaDeAdjacentes.isVazia());
 		}
 
@@ -145,15 +145,15 @@ public class Labirinto {
 			return;
 		}
 		filaDeAdjacentes.removaUmItem();
-		inserirCaracterNaCoordenada('*', atual);
-		caminho.guardePosicao(atual);
-		possibilidades.guardePosicao(filaDeAdjacentes);
+		inserirCaractere('*', atual);
+		caminho.guardaPosicao(atual);
+		possibilidades.guardaPosicao(filaDeAdjacentes);
 	}
 
 	private void retrocederCaminho(Pilha<Coordenada> caminho) throws Exception {
 		Pilha<Coordenada> inverso = new Pilha<>();
 		while (!caminho.isVazia()) {
-			inverso.guardePosicao(caminho.recupereUmItem());
+			inverso.guardaPosicao(caminho.recupereUmItem());
 			caminho.removaUmItem();
 		}
 
@@ -169,7 +169,7 @@ public class Labirinto {
 		System.out.println('\n');
 	}
 
-	private void inserirCaracterNaCoordenada(char caracter, Coordenada coordenada) {
+	private void inserirCaractere(char caracter, Coordenada coordenada) {
 		labirinto[coordenada.getLinha()][coordenada.getColuna()] = caracter;
 	}
 
@@ -195,39 +195,39 @@ public class Labirinto {
 
 		char caracter = labirinto[linha][coluna];
 
-		if ("#*E".indexOf(caracter) == -1)// se não encontrar
+		if ("#*E".indexOf(caracter) == -1) //se o caractere não for encontrado executa o métodp
 			filaAdjacente.guardeUmItem(new Coordenada(linha, coluna));
 	}
 
 	private void verificaEntradasESaidas() throws Exception {
 		if (numeroEntradas == 0)
-			throw new Exception("o labirinto não possui entrada");
+			throw new Exception("o labirinto não possui entrada!");
 		if (numeroEntradas > 1)
-			throw new Exception("o labirinto possui mais de uma entrada");
+			throw new Exception("o labirinto possui mais de uma entrada!");
 
 		if (numeroSaidas == 0)
-			throw new Exception("o labirinto não possui saída");
+			throw new Exception("o labirinto não possui saída!");
 		if (numeroSaidas > 1)
-			throw new Exception("o labirinto possui mais de uma saida");
+			throw new Exception("o labirinto possui mais de uma saida!");
 	}
 
 	private void verificarParedes() throws Exception {
 		for (int j = 0; j < qtdColunas; j++) {
 			// Parede de Cima
 			if (labirinto[0][j] == ' ')
-				throw new Exception("o labirinto não possui parede na parte de cima");
+				throw new Exception("o labirinto não possui parede na parte de cima!");
 			// Parede de Baixo
 			if (labirinto[qtdLinhas - 1][j] == ' ')
-				throw new Exception("o labirinto não possui parede na parte de baixo");
+				throw new Exception("o labirinto não possui parede na parte de baixo!");
 		}
 
 		for (int i = 0; i < qtdLinhas; i++) {
 			// Parede Esquerda
 			if (labirinto[i][0] == ' ')
-				throw new Exception("o labirinto não possui parede à esquerda");
+				throw new Exception("o labirinto não possui parede à esquerda!");
 			// Parede Direita
 			if (labirinto[i][qtdColunas - 1] == ' ')
-				throw new Exception("o labirinto não possui parede à direita");
+				throw new Exception("o labirinto não possui parede à direita!");
 		}
 	}
 

@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class LeArquivo {
+public class Arquivo {
 	private BufferedReader in;
 	private String caminhoDeEntrada;
 	private String path;
 	private int[] opcoes = { 1, 2, 3, 4, 5, 6,};
 	private String nomeDoArquivo;
 
-	public LeArquivo(String nomeDoArquivo, int opcao) throws Exception {
+	public Arquivo(String nomeDoArquivo, int opcao) throws Exception {
 		this.nomeDoArquivo = nomeDoArquivo;
 		if (nomeDoArquivo.isEmpty() || nomeDoArquivo.isBlank())
 			throw new Exception("Nome do arquivo inválido!");
@@ -53,8 +53,8 @@ public class LeArquivo {
 
 		return ret;
 	}
-	//pega do objeto in
-	public int pegaUmInt() throws Exception {
+	//pega do arquivo
+	public int pegarUmItem() throws Exception {
 		int ret = 0;
 
 		try {

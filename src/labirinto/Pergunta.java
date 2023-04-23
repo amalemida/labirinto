@@ -1,19 +1,33 @@
 package labirinto;
 
-public class PerguntasFactory {
+public class Pergunta {
 	private int opcao;
 	private String nomeDoArquivo;
 
 	public void fazerPergunta() throws Exception {
 		while (opcao < 1 || opcao > 19) {
 			try {
-				System.out.println("\nQual arquivo deseja utilizar?" + "\n1 - Teste1.txt" + "\n2 - Teste2.txt"
-						+ "\n3 - Teste3.txt" + "\n4 - Teste4.txt" + "\n5 - Teste5.txt" + "\n6 - Teste6.txt"
-						+ "\n7 - 2entradas.txt" + "\n8 - 2saidas.txt" + "\n9 - CaracteresEstranhos.txt"
-						+ "\n10 - EntradaForaDeLugar.txt" + "\n11 - QuantidadeLinhaErrada.txt"
-						+ "\n12 - SaidaForaDeLugar.txt" + "\n13 - SemCaminhoDeEparaS.txt" + "\n14 - SemEntrada.txt"
-						+ "\n15- SemParede1.txt" + "\n16- SemParede2.txt" + "\n17- SemQtdDeLinsEOuCols.txt"
-						+ "\n18- SemSaida.txt" + "\n19- TamanhosDeLinhaErrados.txt\n");
+				System.out.println("\nQual arquivo deseja utilizar?\n"
+									+ "\n 1 - Teste1.txt" 
+									+ "\n 2 - Teste2.txt"
+									+ "\n 3 - Teste3.txt"
+									+ "\n 4 - Teste4.txt"
+									+ "\n 5 - Teste5.txt"
+									+ "\n 6 - Teste6.txt"
+									+ "\n 7 - 2entradas.txt"
+									+ "\n 8 - 2saidas.txt"
+									+ "\n 9 - CaracteresEstranhos.txt"
+									+ "\n10 - EntradaForaDeLugar.txt" 
+									+ "\n11 - QuantidadeLinhaErrada.txt"
+									+ "\n12 - SaidaForaDeLugar.txt" 
+									+ "\n13 - SemCaminhoDeEparaS.txt" 
+									+ "\n14 - SemEntrada.txt"
+									+ "\n15 - SemParede1.txt"
+									+ "\n16 - SemParede2.txt"
+									+ "\n17 - SemQtdDeLinsEOuCols.txt"
+									+ "\n18 - SemSaida.txt"
+									+ "\n19 - TamanhosDeLinhaErrados.txt\n"
+									);
 
 				opcao = Teclado.getUmInt();
 

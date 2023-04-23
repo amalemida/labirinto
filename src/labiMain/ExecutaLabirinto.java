@@ -7,10 +7,10 @@ public class ExecutaLabirinto {
 		Labirinto labirinto;
 
 		try {
-			PerguntasFactory perguntasFactory = new PerguntasFactory();
+			Pergunta perguntasFactory = new Pergunta();
 			perguntasFactory.fazerPergunta();
 
-			LeArquivo arquivo = new LeArquivo(perguntasFactory.getNomeDoArquivo(), perguntasFactory.getOpcao());
+			Arquivo arquivo = new Arquivo(perguntasFactory.getNomeDoArquivo(), perguntasFactory.getOpcao());
 
 			{
 
