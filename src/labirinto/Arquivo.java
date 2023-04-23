@@ -4,22 +4,16 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.FileSystems;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Arquivo {
-	private BufferedReader in;
+	private BufferedReader opcaoDoUsuario;
 	private String caminhoDeEntrada;
-	private String path;
-	private int[] opcoes = { 1, 2, 3, 4, 5, 6,};
 	private String nomeDoArquivo;
+	private String path;
+	private int[] opcoes = { 1, 2, 3, 4, 5, 6 };
 
 	public Arquivo(String nomeDoArquivo, int opcao) throws Exception {
 		this.nomeDoArquivo = nomeDoArquivo;
-		if (nomeDoArquivo.isEmpty() || nomeDoArquivo.isBlank())
-			throw new Exception("Nome do arquivo inválido!");
-
 		try {
 			for (int i = 0; i < opcoes.length; i++) {
 				if (opcao == opcoes[i]) {
@@ -31,11 +25,10 @@ public class Arquivo {
 				}
 			}
 			this.caminhoDeEntrada = FileSystems.getDefault().getPath(path).toAbsolutePath().toString();
-			this.in = new BufferedReader(new FileReader(this.caminhoDeEntrada));
+			this.opcaoDoUsuario = new BufferedReader(new FileReader(this.caminhoDeEntrada));
 
 		} catch (Exception erro) {
 			erro.getMessage();
-		//	System.err.println("Arquivo não encontrado");
 		}
 	}
 
@@ -47,18 +40,19 @@ public class Arquivo {
 		String ret = null;
 
 		try {
-			ret = in.readLine();
+			ret = opcaoDoUsuario.readLine();
 		} catch (IOException ignored) {
 		}
 
 		return ret;
 	}
-	//pega do arquivo
+
+	// esse método é uma cópia de Teclado.class para ler do arquivo.txt
 	public int pegarUmItem() throws Exception {
 		int ret = 0;
 
 		try {
-			ret = Integer.parseInt(in.readLine());
+			ret = Integer.parseInt(opcaoDoUsuario.readLine());
 		} catch (IOException ignored) {
 		} catch (NumberFormatException ignored) {
 			throw new Exception("Int invalido!");
@@ -67,16 +61,7 @@ public class Arquivo {
 		return ret;
 	}
 
-	public void lerNovamente() throws Exception {
-		try {
-			this.in.close();
-			this.in = new BufferedReader(new FileReader(this.caminhoDeEntrada));
-		} catch (IOException erro) {
-			throw new Exception(erro);
-		}
-	}
-
 	public void fecharArquivo() throws IOException {
-		in.close();
+		opcaoDoUsuario.close();
 	}
 }

@@ -4,20 +4,20 @@ public class Labirinto {
 	private char[][] labirinto;
 	private int qtdLinhas;
 	private int qtdColunas;
+	private int numLinha;
 	private int numeroEntradas;
 	private int numeroSaidas;
-	private Coordenada posicaoEntrada;
+	private String terceiraLinha;
+	private String linha;
 	private Coordenada atual;
 	private boolean encontrouSaida = false;
 
 	public Labirinto(Arquivo arquivo) throws Exception {
-		//this.arquivo = arquivo;
 		// Pega o numero de linhas
 		this.qtdLinhas = arquivo.pegarUmItem();
 		// Pega o numero de colunas
 		this.qtdColunas = arquivo.pegarUmItem();
-
-		String terceiraLinha = arquivo.pegaProximaLinha();
+		this.terceiraLinha = arquivo.pegaProximaLinha();
 
 		if (this.qtdLinhas == 0 || this.qtdColunas == 0)
 			throw new Exception("Labirinto inválido!");
@@ -27,16 +27,14 @@ public class Labirinto {
 
 		inserirLinha(terceiraLinha, 0);
 
-		String linha;
-		int numLinha = 1;
-
+		numLinha = 1;
 		while ((linha = arquivo.pegaProximaLinha()) != null) {
 			inserirLinha(linha, numLinha);
 			numLinha++;
 		}
 
 		arquivo.fecharArquivo();
-		
+
 		if (numLinha != this.qtdLinhas)
 			throw new Exception("a quantidade de linhas é diferente da especificada!");
 
@@ -44,7 +42,7 @@ public class Labirinto {
 		verificaEntradasESaidas();
 		verificarParedes();
 
-		System.out.println("Labirinto do arquivo " + arquivo.getNomeDoArquivo() +"\n");
+		System.out.println("Labirinto do arquivo " + arquivo.getNomeDoArquivo() + "\n");
 		imprimeLabirinto();
 	}
 
@@ -72,14 +70,14 @@ public class Labirinto {
 
 			// Verifica os caracteres permitidos
 			if (caracteresAceitos.indexOf(caractere) == -1)
-				throw new Exception("o caractere " + caractere + " é inválido");
+				throw new Exception("o caractere " + caractere + " é inválido!");
 
 			switch (caractere) {
 			case 'E':
 
 				numeroEntradas++;
 				atual = new Coordenada(numeroDaLinha, numeroColuna);
-				posicaoEntrada = new Coordenada(numeroDaLinha, numeroColuna);
+				Coordenada posicaoEntrada = new Coordenada(numeroDaLinha, numeroColuna);
 				break;
 
 			case 'S':
@@ -112,7 +110,7 @@ public class Labirinto {
 
 		System.out.println("Oba, saída encontrada!\n");
 		imprimeLabirinto();
-		
+
 		System.out.println("Posições do caminho até a saída\n");
 		retrocederCaminho(caminho);
 	}
@@ -127,7 +125,7 @@ public class Labirinto {
 				atual = caminho.recupereUmItem();
 				caminho.removaUmItem();
 				if (caminho.isVazia())
-					throw new Exception("Saida não encontrada!");
+					throw new Exception("saída não encontrada!");
 
 				inserirCaractere(' ', atual);
 
@@ -195,7 +193,7 @@ public class Labirinto {
 
 		char caracter = labirinto[linha][coluna];
 
-		if ("#*E".indexOf(caracter) == -1) //se o caractere não for encontrado executa o métodp
+		if ("#*E".indexOf(caracter) == -1) // se o caractere não for encontrado executa o métodp
 			filaAdjacente.guardeUmItem(new Coordenada(linha, coluna));
 	}
 
