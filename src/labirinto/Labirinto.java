@@ -20,7 +20,7 @@ public class Labirinto {
 		this.terceiraLinha = arquivo.pegaProximaLinha();
 
 		if (this.qtdLinhas == 0 || this.qtdColunas == 0)
-			throw new Exception("Labirinto inválido!");
+			throw new Exception("labirinto inválido!");
 
 		// Cria o labirinto
 		this.labirinto = new char[qtdLinhas][qtdColunas];

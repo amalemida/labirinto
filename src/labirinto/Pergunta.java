@@ -3,8 +3,7 @@ package labirinto;
 public class Pergunta {
 	private int opcao;
 	private String nomeDoArquivo;
-	private Arquivo arquivo;
-	
+		
 	public void fazerPergunta() throws Exception {
 		while (opcao < 1 || opcao > 19) {
 			try {
@@ -106,7 +105,6 @@ public class Pergunta {
 		
 		}
 
-		arquivo.fecharArquivo();
 	}
 
 	public String getNomeDoArquivo() {
