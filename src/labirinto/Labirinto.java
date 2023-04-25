@@ -13,14 +13,19 @@ public class Labirinto {
 	private boolean encontrouSaida = false;
 
 	public Labirinto(Arquivo arquivo) throws Exception {
-		// Pega o numero de linhas
-		this.qtdLinhas = arquivo.pegarUmItem();
-		// Pega o numero de colunas
-		this.qtdColunas = arquivo.pegarUmItem();
-		this.terceiraLinha = arquivo.pegaProximaLinha();
+		try {
+			// Pega o numero de linhas
+			this.qtdLinhas = arquivo.pegarUmItem();
+			// Pega o numero de colunas
+			this.qtdColunas = arquivo.pegarUmItem();
+		} catch (Exception erro) {
+			if (erro.getMessage().equals("Int invalido!"))
+				erro.getMessage();
+		}
 
 		if (this.qtdLinhas == 0 || this.qtdColunas == 0)
-			throw new Exception("labirinto inválido!");
+			throw new Exception("o labirinto não possui quantidade de linhas e/ou colunas!");
+		this.terceiraLinha = arquivo.pegaProximaLinha();
 
 		// Cria o labirinto
 		this.labirinto = new char[qtdLinhas][qtdColunas];
